@@ -5,13 +5,15 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by amine on 12/04/18.
  */
 
 public class NotesAdapter extends RecyclerView.Adapter {
 
-    private String[] mDataset;
+    private ArrayList<Note> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -26,7 +28,7 @@ public class NotesAdapter extends RecyclerView.Adapter {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public NotesAdapter(String[] myDataset){
+    public NotesAdapter(ArrayList<Note> myDataset){
         mDataset = myDataset;
     }
 
@@ -49,11 +51,12 @@ public class NotesAdapter extends RecyclerView.Adapter {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         NotesAdapter.ViewHolder  noteVH = (NotesAdapter.ViewHolder)holder;
-        noteVH.mTextView.setText(mDataset[position]);
+        Note currentNote = mDataset.get(position);
+        noteVH.mTextView.setText(currentNote.getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mDataset.size();
     }
 }
