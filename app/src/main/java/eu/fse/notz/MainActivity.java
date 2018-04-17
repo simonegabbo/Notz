@@ -1,10 +1,12 @@
 package eu.fse.notz;
 
 
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import java.util.ArrayList;
 
@@ -20,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     //private String[] myDataset = {"nota 1","ciao"};
     private ArrayList<Note> myDataset;
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +34,15 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView.setHasFixedSize(true);
 
-        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager = new StaggeredGridLayoutManager(2,1);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         myDataset = new ArrayList<>();
-        Note pinPalazzo = new Note("PIN","PASSWORD");
+
+        Note Spesa = new Note("Spesa","acqua, latte");
+        myDataset.add(Spesa);
+
+        Note pinPalazzo = new Note("PIN","123456");
         myDataset.add(pinPalazzo);
 
         mAdapter = new NotesAdapter(myDataset);
