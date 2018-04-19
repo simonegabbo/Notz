@@ -30,9 +30,15 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
         }
     }
 
+
     public NotesAdapter(ArrayList<Note> myDataset) {
 
         mDataset = myDataset;
+    }
+
+    public void addNote(Note note){
+        mDataset.add(note);
+        notifyDataSetChanged();
     }
 
     public NotesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

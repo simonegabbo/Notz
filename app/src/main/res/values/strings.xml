@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Notz</string>
+    <string name="dialog_positive_button">aggiungi</string>
+    <string name="dialog_negativ_button">annulla</string>
 </resources>
