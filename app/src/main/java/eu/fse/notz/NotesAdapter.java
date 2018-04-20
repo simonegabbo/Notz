@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Created by Amministratore on 12/04/2018.
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
 
     private ArrayList<Note> mDataset;
+
+    
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView titleTv;
@@ -37,9 +40,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
     }
 
     public void addNote(Note note){
-        mDataset.add(note);
-        notifyDataSetChanged();
+        mDataset.add(0,note);
+        notifyItemInserted(0);
     }
+
 
     public NotesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view

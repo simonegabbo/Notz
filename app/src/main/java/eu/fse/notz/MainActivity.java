@@ -12,8 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton addNote;
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,16 +46,22 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView.setHasFixedSize(true);
 
-        mLayoutManager = new StaggeredGridLayoutManager(2, 1);
+        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         myDataset = new ArrayList<>();
 
-        Note Spesa = new Note("Spesa", "acqua, latte");
+        /*Note Spesa = new Note("Spesa", "acqua, laffuyfuyfyffuyuyuyfutte");
         myDataset.add(Spesa);
 
         Note pinPalazzo = new Note("PIN", "123456");
         myDataset.add(pinPalazzo);
+
+        Note newPin = new Note("PIN", "12345vhfvuyfyvuyfuyfuyfguyfuy6");
+        myDataset.add(newPin);
+
+        Note pin = new Note("PIN", "123456");
+        myDataset.add(pin);*/
 
         mAdapter = new NotesAdapter(myDataset);
         mRecyclerView.setAdapter(mAdapter);
@@ -73,12 +82,20 @@ public class MainActivity extends AppCompatActivity {
 
 
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.activity_new, null);
 
-        alertBuilder.setView(R.layout.activity_new);
+        alertBuilder.setView(dialogView);
+
+        final EditText titleEt = (EditText) dialogView.findViewById(R.id.new_title);
+        final EditText descriptionEt = (EditText) dialogView.findViewById(R.id.new_description);
+
         alertBuilder.setPositiveButton(R.string.dialog_positive_button, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Note note = new Note("Titolo della nota", "Contenuto nota");
+                String insertTitle= titleEt.getText().toString();
+                String insertDescription= descriptionEt.getText().toString();
+
+                Note note = new Note(insertTitle, insertDescription);
                 mAdapter.addNote(note);
             }
         });
