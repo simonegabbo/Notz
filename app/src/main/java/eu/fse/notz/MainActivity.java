@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         Note pin = new Note("PIN", "123456");
         myDataset.add(pin);*/
 
-        mAdapter = new NotesAdapter(myDataset);
+        mAdapter = new NotesAdapter(myDataset, this);
         mRecyclerView.setAdapter(mAdapter);
 
         addNote.setOnClickListener(new View.OnClickListener(){
