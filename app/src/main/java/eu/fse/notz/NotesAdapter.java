@@ -21,6 +21,9 @@ public class NotesAdapter extends RecyclerView.Adapter {
 
     private ArrayList<Note> mDataset;
     private Context context;
+    private Note note;
+
+
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -41,7 +44,15 @@ public class NotesAdapter extends RecyclerView.Adapter {
                 public void onClick(View view) {
                     //TODO fai cose
                     Intent intent = new Intent(context, NoteActivity.class);
-                    context.startActivity(intent);
+
+                    String title = mDataset.get(getAdapterPosition()).getTitle();
+                    String description = mDataset.get(getAdapterPosition()).getDescription();
+
+                    intent.putExtra("title",title);
+                    intent.putExtra("description",description);
+                    intent.putExtra("position",getAdapterPosition());
+
+                    ((MainActivity)context).startActivityForResult(intent,MainActivity.EDIT_REQUEST);
 
                 }
             });
@@ -55,6 +66,16 @@ public class NotesAdapter extends RecyclerView.Adapter {
     public NotesAdapter(ArrayList<Note> myDataset,Context context) {
         mDataset = myDataset;
         this.context = context;
+    }
+
+    public Note getNote(int index) {
+        return mDataset.get(index);
+    }
+
+
+    public void updateNote(int index,Note note){
+        mDataset.set(index,note);
+        notifyItemChanged(index);
     }
 
 
