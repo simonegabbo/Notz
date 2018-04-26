@@ -48,11 +48,11 @@ public class NotesAdapter extends RecyclerView.Adapter {
                     String title = mDataset.get(getAdapterPosition()).getTitle();
                     String description = mDataset.get(getAdapterPosition()).getDescription();
 
-                    intent.putExtra("title",title);
-                    intent.putExtra("description",description);
-                    intent.putExtra("position",getAdapterPosition());
+                    intent.putExtra("title", title);
+                    intent.putExtra("description", description);
+                    intent.putExtra("position", getAdapterPosition());
 
-                    ((MainActivity)context).startActivityForResult(intent,1001);
+                    ((MainActivity) context).startActivityForResult(intent, 1001);
 
 
                 }
@@ -64,7 +64,7 @@ public class NotesAdapter extends RecyclerView.Adapter {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public NotesAdapter(ArrayList<Note> myDataset,Context context) {
+    public NotesAdapter(ArrayList<Note> myDataset, Context context) {
         mDataset = myDataset;
         this.context = context;
     }
@@ -74,19 +74,30 @@ public class NotesAdapter extends RecyclerView.Adapter {
     }
 
 
-    public void updateNote(int index,Note note){
-        mDataset.set(index,note);
+    public void updateNote(int index, Note note) {
+        mDataset.set(index, note);
         notifyItemChanged(index);
     }
 
-    public void updateNote(int index,String title, String description){
+    public void removeNote(int index) {
+        mDataset.remove(index);
+        notifyItemRemoved(index);
+    }
+
+    public void addNote(int index, Note note) {
+        mDataset.add(index, note);
+        notifyItemInserted(index);
+
+    }
+
+
+    public void updateNote(int index, String title, String description) {
 
         Note note = mDataset.get(index);
 
         note.setTitle(title);
         note.setDescription(description);
         notifyItemChanged(index);
-
 
 
     }

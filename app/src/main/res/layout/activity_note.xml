@@ -21,5 +21,11 @@
         android:text="@string/confirm"
         android:id="@+id/edit_confirm"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/delete"
+        android:id="@+id/edit_delete"/>
+
 
 </LinearLayout>

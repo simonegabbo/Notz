@@ -20,6 +20,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     public static final int EDIT_REQUEST = 1001;
+    public static final int RESUL_REMOVE_NOTE = RESULT_FIRST_USER + 1;
+
     private RecyclerView mRecyclerView;
     private NotesAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -65,12 +67,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == EDIT_REQUEST) {
 
-            if (resultCode == Activity.RESULT_OK) {
+            if (resultCode == RESULT_OK) {
 
                 //getPosition from returnIntent
                 int editedNotePosition = data.getIntExtra("position", -1);
@@ -79,8 +81,28 @@ public class MainActivity extends AppCompatActivity {
                         data.getStringExtra("title"),
                         data.getStringExtra("description"));
 
-
             }
+
+            if(resultCode == RESUL_REMOVE_NOTE){
+                final int editedNotePosition = data.getIntExtra("position", -1);
+                mAdapter.removeNote(editedNotePosition);
+
+
+                Snackbar.make(mRecyclerView,getString(R.string.note_removed),Snackbar.LENGTH_LONG)
+                        .setAction(R.string.cancel, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                Note note = new Note(data.getStringExtra("title"),
+                                        data.getStringExtra("description"));
+
+                                mAdapter.addNote(editedNotePosition,note);
+                            }
+                        })
+                        .show();
+            }
+
+
 
         }
 
