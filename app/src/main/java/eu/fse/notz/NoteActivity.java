@@ -37,6 +37,8 @@ public class NoteActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String editedTitle = titleEt.getText().toString();
                 String editedDescription = descriptionEt.getText().toString();
+
+
                 int position = intent.getIntExtra("position",-1);
 
                 Intent returnIntent = new Intent();

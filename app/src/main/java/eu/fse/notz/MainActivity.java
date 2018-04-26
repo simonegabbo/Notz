@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // specify an adapter (see also next example)
-        mAdapter = new NotesAdapter(myDataset,this);
+        mAdapter = new NotesAdapter(myDataset, this);
         mRecyclerView.setAdapter(mAdapter);
 
 
@@ -68,18 +68,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == EDIT_REQUEST){
+        if (requestCode == EDIT_REQUEST) {
 
-            if(resultCode == Activity.RESULT_OK){
+            if (resultCode == Activity.RESULT_OK) {
+
                 //getPosition from returnIntent
-                int editedNotePosition = data.getIntExtra("position",-1);
-                Note note = mAdapter.getNote(editedNotePosition);
+                int editedNotePosition = data.getIntExtra("position", -1);
 
+                mAdapter.updateNote(editedNotePosition,
+                        data.getStringExtra("title"),
+                        data.getStringExtra("description"));
 
-                note.setTitle(data.getStringExtra("title"));
-                note.setDescription(data.getStringExtra("description"));
-
-                mAdapter.updateNote(editedNotePosition,note);
 
             }
 
@@ -92,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 
         final View dialogView = LayoutInflater.from(this)
-                .inflate(R.layout.dialog_add_note,null);
+                .inflate(R.layout.dialog_add_note, null);
 
         alertBuilder.setView(dialogView);
         alertBuilder.setTitle(R.string.dialog_add_note_title);

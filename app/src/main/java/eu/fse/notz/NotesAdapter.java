@@ -52,7 +52,8 @@ public class NotesAdapter extends RecyclerView.Adapter {
                     intent.putExtra("description",description);
                     intent.putExtra("position",getAdapterPosition());
 
-                    ((MainActivity)context).startActivityForResult(intent,MainActivity.EDIT_REQUEST);
+                    ((MainActivity)context).startActivityForResult(intent,1001);
+
 
                 }
             });
@@ -76,6 +77,18 @@ public class NotesAdapter extends RecyclerView.Adapter {
     public void updateNote(int index,Note note){
         mDataset.set(index,note);
         notifyItemChanged(index);
+    }
+
+    public void updateNote(int index,String title, String description){
+
+        Note note = mDataset.get(index);
+
+        note.setTitle(title);
+        note.setDescription(description);
+        notifyItemChanged(index);
+
+
+
     }
 
 
