@@ -4,15 +4,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class NoteActivity extends AppCompatActivity {
 
     EditText titleEt, descriptionEt;
 
     Button editConfirmBtn, deleteButton;
+
+    String title,description;
+
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +32,10 @@ public class NoteActivity extends AppCompatActivity {
         deleteButton = (Button) findViewById(R.id.edit_delete);
 
         //get values from launching intent
-        final Intent intent = getIntent();
-        final String title = intent.getStringExtra("title");
-        final String description = intent.getStringExtra("description");
+        intent = getIntent();
+        title = intent.getStringExtra("title");
+        description = intent.getStringExtra("description");
+
 
         // set values to Edittexts
 
@@ -53,25 +62,43 @@ public class NoteActivity extends AppCompatActivity {
             }
         });
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+
+    }
 
 
-                int position = intent.getIntExtra("position", -1);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_note,menu);
 
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("title", title);
-                returnIntent.putExtra("description", description);
-                returnIntent.putExtra("position", position);
-                setResult(MainActivity.RESUL_REMOVE_NOTE, returnIntent);
-
-
-                finish();
+        return true;
+    }
 
 
-            }
-        });
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        if(item.getItemId() == R.id.edit_delete){
+
+
+            int position = intent.getIntExtra("position", -1);
+
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("title", title);
+            returnIntent.putExtra("description", description);
+            returnIntent.putExtra("position", position);
+            setResult(MainActivity.RESUL_REMOVE_NOTE, returnIntent);
+
+            finish();
+            return true;
+        }
+        if(item.getItemId() == R.id.ciao){
+
+            Toast.makeText(this,"Ciao",Toast.LENGTH_LONG).show();
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
