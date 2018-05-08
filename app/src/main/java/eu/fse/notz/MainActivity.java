@@ -11,9 +11,20 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 
@@ -52,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         // specify an adapter (see also next example)
         mAdapter = new NotesAdapter(myDataset, this);
         mRecyclerView.setAdapter(mAdapter);
+
+        getNotesFromURL();
 
 
         addNoteButton.setOnClickListener(new View.OnClickListener() {
@@ -145,10 +158,49 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        alertBuilder.set
+        //alertBuilder.set;
 
         alertBuilder.show();
 
+
+    }
+    private void getNotesFromURL() {
+
+        //Make HTTP call
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        String url = "http://5af1bf8530f9490014ead894.mockapi.io/api/v1/notes";
+
+        // Request a string response from the provided URL.
+        JsonArrayRequest jsonRequest = new JsonArrayRequest(
+                Request.Method.GET, // METHOD
+                url, // URL
+                null, // Body parameters
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // TODO manage success
+                        Log.d("jsonRequest",response.toString());
+                        ArrayList<Note> noteListFromResponse = Note.getNotesList(response);
+                        mAdapter.addNotesList(noteListFromResponse);
+                    }
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("jsonRequest",error.getMessage());
+                        Toast.makeText(MainActivity.this,
+                                error.getMessage(),
+                                Toast.LENGTH_LONG).show();
+
+                    }
+                });
+
+        // Add the request to the RequestQueue.
+        queue.add(jsonRequest);
 
     }
 
